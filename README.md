@@ -21,6 +21,11 @@ This experiment demonstrates the simulation of a **2D NMOS transistor structure 
 * Output data from the simulation
 * Result visualizations generated from the simulation
 
+### Mesh Generation
+
+A mesh is generated over the device structure to discretize the semiconductor region for numerical simulation. Finer meshing is applied near critical regions such as the channel and gate oxide interface to improve simulation accuracy.
+
+
 ### Notes
 
 This experiment serves as a foundational step for understanding MOSFET device simulation and will be extended with more advanced structures in future experiments.
