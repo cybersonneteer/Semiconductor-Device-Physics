@@ -26,6 +26,10 @@ This experiment demonstrates the simulation of a **2D NMOS transistor structure 
 A mesh is generated over the device structure to discretize the semiconductor region for numerical simulation. Finer meshing is applied near critical regions such as the channel and gate oxide interface to improve simulation accuracy.
 ![2D NMOS Mesh](2D_DEVICES/2_nmos_meshing.png)
 
+### Current Density Distribution
+
+The current density plot shows how charge carriers flow through the device when a bias is applied. The highest current density is typically observed along the channel region between the source and drain.
+![2D NMOS Mesh](2D_DEVICES/current_density_2d_nmos.png)
 ### Notes
 
 This experiment serves as a foundational step for understanding MOSFET device simulation and will be extended with more advanced structures in future experiments.
