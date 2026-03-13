@@ -1,0 +1,132 @@
+;;
+;; (journal:on "/home/vlsilab/Desktop/shreya/mosfet_3d/nmos_1.jrl")
+;; "/home/vlsilab/Desktop/shreya/mosfet_3d/nmos_1.jr ...
+(bound? 'region_1_substrate)
+;; #f
+(sdegeo:create-rectangle (position 0 0 0)  (position 1.5 0.7 0) "Silicon" "region_1_substrate")
+;; #[body 5 1]
+(sdegeo:set-default-boolean "ABA")
+;; "ABA"
+(bound? 'region_2_source)
+;; #f
+(sdegeo:create-rectangle (position 0 0 0)  (position 0.25 0.1 0) "Silicon" "region_2_source")
+;; #[body 6 1]
+(sdegeo:set-default-boolean "ABA")
+;; "ABA"
+(bound? 'region_3_drain)
+;; #f
+(sdegeo:create-rectangle (position 1.25 0 0)  (position 1.5 0.1 0) "Silicon" "region_3_drain")
+;; #[body 7 1]
+(sde:set-default-material "SiO2")
+;; "Silicon"
+(bound? 'region_4_oxide)
+;; #f
+(sdegeo:create-rectangle (position 0.25 0 0)  (position 1.25 -0.005 0) "SiO2" "region_4_oxide")
+;; #[body 8 1]
+(sdegeo:insert-vertex (position 0.2 0 0))
+;; (#[vertex 9 1])
+(sdegeo:insert-vertex (position 1.3 0 0))
+;; (#[vertex 10 1])
+(sdegeo:fillet-2d (list (car (find-vertex-id (position 0.25 0.1 0)))) 0.1)
+
+;; ()
+(sdegeo:fillet-2d (list (car (find-vertex-id (position 1.25 0.1 0)))) 0.1)
+
+;; ()
+(sde:separate-lumps)
+;; (#[body 8 1] #[body 19 1] #[body 57 1] #[body 76  ...
+(sdedr:define-constant-profile "ConstantProfileDefinition.substrate" "BoronActiveConcentration" 1e+17)
+;; #t
+(sdedr:define-constant-profile-region "ConstantProfilePlacement.substrate" "ConstantProfileDefinition.substrate" "region_1_substrate")
+;; #t
+(sdedr:define-constant-profile "ConstantProfileDefinition.source" "PhosphorusActiveConcentration" 1e+20)
+;; #t
+(sdedr:define-constant-profile-region "ConstantProfilePlacement.source" "ConstantProfileDefinition.source" "region_2_source")
+;; #t
+(sdedr:define-constant-profile "ConstantProfileDefinition.drain" "PhosphorusActiveConcentration" 1e+20)
+;; #t
+(sdedr:define-constant-profile-region "ConstantProfilePlacement.drain" "ConstantProfileDefinition.drain" "region_3_drain")
+;; #t
+(sdegeo:define-contact-set "gate" 4  (color:rgb 1 0 0 ) "##")
+;; ()
+(sdegeo:define-contact-set "source" 4  (color:rgb 1 1 0 ) "##")
+;; ()
+(sdegeo:define-contact-set "drain" 4  (color:rgb 1 1 1 ) "##")
+;; ()
+(sdegeo:define-contact-set "substrate" 4  (color:rgb 0 1 1 ) "##")
+;; ()
+(sdegeo:set-current-contact-set "gate")
+;; ""
+(sdegeo:set-current-contact-set "source")
+;; "gate"
+(sdegeo:set-current-contact-set "drain")
+;; "source"
+(sdegeo:set-current-contact-set "substrate")
+;; "drain"
+(sdegeo:set-current-contact-set "source")
+;; "substrate"
+(sdegeo:set-contact (list (car (find-edge-id (position 0.1 0 0)))) "source")
+
+;; ()
+(render:rebuild)
+;; ()
+(sdegeo:set-current-contact-set "gate")
+;; "source"
+(sdegeo:set-contact (list (car (find-edge-id (position 0.75 -0.005 0)))) "gate")
+
+;; ()
+(render:rebuild)
+;; ()
+(sdegeo:set-current-contact-set "drain")
+;; "gate"
+(sdegeo:set-contact (list (car (find-edge-id (position 1.4 0 0)))) "drain")
+
+;; ()
+(render:rebuild)
+;; ()
+(sdegeo:set-current-contact-set "substrate")
+;; "drain"
+(sdegeo:set-contact (list (car (find-edge-id (position 0.75 0.7 0)))) "substrate")
+
+;; ()
+(render:rebuild)
+;; ()
+(bound? 'RefEvalWin_1)
+;; #f
+(sdedr:define-refeval-window "RefEvalWin_1" "Rectangle"  (position 0 -0.005 0) (position 1.5 0.7 0))
+;; #[body 114 1]
+(sdedr:define-refinement-size "RefinementDefinition.all" 0.02 0.02 0.01 0.01 )
+;; #t
+(sdedr:define-refinement-placement "RefinementPlacement.all" "RefinementDefinition.all" (list "window" "RefEvalWin_1" ) )
+;; #t
+(sdedr:delete-refeval-window "RefEvalWin_1" )
+;; #t
+(sdedr:define-refeval-window "RefEvalWin_1" "Rectangle"  (position 0.15 -0.005 0.0)  (position 1.25 0.1 0.0) )
+;; #[body 115 1]
+(sdedr:define-refeval-window "RefEvalWin_channel" "Rectangle"  (position 0.15 -0.005 0.0)  (position 1.25 0.1 0.0) )
+;; #[body 116 1]
+(sdedr:delete-refeval-window "RefEvalWin_channel" )
+;; #t
+(sdedr:define-refeval-window "RefEvalWin_channel" "Rectangle"  (position 0.15 -0.005 0.0)  (position 1.25 0.1 0.0) )
+;; #[body 117 1]
+(sdedr:define-multibox-size "MultiboxDefinition_1" 0.01 0.01 0.005 0.005 1 1.35 )
+;; #t
+(sdedr:define-multibox-placement "MultiboxPlacement.channel" "MultiboxDefinition_1" "RefEvalWin_channel" )
+;; #t
+(sde:set-project-name "nmos1")
+;; ""
+(sdesnmesh:iocontrols "outputFile" "nmos1")
+;; #t
+(sde:set-meshing-command "snmesh")
+;; #t
+(sde:set-project-name "nmos1")
+;; "./nmos1"
+(sdesnmesh:iocontrols "outputFile" "nmos1")
+;; #t
+(sde:build-mesh "" "nmos1")
+"Meshing successful"
+;; #t
+(system:command "svisual nmos1_msh.tdr &")
+;; 0
+(sde:save-model "/home/vlsilab/Desktop/shreya/mosfet_3d/nmos_10_03_shreya")
+;; #t
